@@ -65,7 +65,7 @@ export class AppComponent implements AfterViewInit {
         Object.keys(p).forEach(key => {
           let value = (p as any)[key];
           if (key === 'wiki_page') {
-            value = `<a href=${value}>${value}</a>`
+            value = `<a href=${value} target="_blank">${value}</a>`
           }
           markerStr += `${key}: ${value}<br>`
         })
@@ -98,16 +98,5 @@ export class AppComponent implements AfterViewInit {
   players: Array<Player> = [];
   hometowns: Record<string, LatLong> = {};
   constructor(private http: HttpClient) {
-    // forkJoin(
-    //   [
-    //     this.http.get('assets/players.json'),
-    //     this.http.get('assets/hometowns.json')
-    //   ]
-    // )
-    // .subscribe(resp => {
-    //   this.players = resp[0] as any;
-    //   this.hometowns = resp[1] as any;
-
-    // });
   }
 }
