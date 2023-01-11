@@ -57,7 +57,7 @@ export class AppComponent implements AfterViewInit {
     this.players.forEach(p => {
       if (p.birthplace in this.hometowns) {
         const flagIcon = L.icon({
-          iconUrl: encodeURI(`/assets/flags/${p.country}.png`),
+          iconUrl: encodeURI(`assets/flags/${p.country}.png`),
           iconSize: [12, 12],
         });
         const marker = new L.Marker([this.hometowns[p.birthplace].lat, this.hometowns[p.birthplace].lon], {icon: flagIcon});
