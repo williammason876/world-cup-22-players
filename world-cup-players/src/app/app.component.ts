@@ -54,13 +54,32 @@ export class AppComponent implements AfterViewInit {
 
     tiles.addTo(this.map);
 
+    const offsetStep = 0.0001; //11 meters
+    const offsetTracker: Record<string, number> = {};
+
+
     this.players.forEach(p => {
       if (p.birthplace in this.hometowns) {
+
+        const lat = this.hometowns[p.birthplace].lat;
+        const lon = this.hometowns[p.birthplace].lon;
+
+        const key = p.birthplace;
+        if (!offsetTracker[key]) {
+          offsetTracker[key] = 0; // Initialize offset for this pair
+        }
+
+        offsetTracker[key] += offsetStep;
+
+        const adjustedLat = lat + offsetTracker[key];
+        const adjustedLon = lon + offsetTracker[key];
+
+
         const flagIcon = L.icon({
           iconUrl: encodeURI(`assets/flags/${p.country}.png`),
           iconSize: [12, 12],
         });
-        const marker = new L.Marker([this.hometowns[p.birthplace].lat, this.hometowns[p.birthplace].lon], {icon: flagIcon});
+        const marker = new L.Marker([adjustedLat, adjustedLon], { icon: flagIcon });
         let markerStr = '';
         Object.keys(p).forEach(key => {
           let value = (p as any)[key];
